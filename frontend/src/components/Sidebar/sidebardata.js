@@ -13,7 +13,6 @@ export const SidebarData = [
   },
   {
     title: 'Master',
-    path: '/master',
     icon: <IoIcons.IoIosPaper />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
@@ -38,30 +37,69 @@ export const SidebarData = [
         cName: 'sub-nav'
       },
       {
-        title: 'Create Exam',
+        title: 'Exam',
         path: '/master/createExam',
         icon: <IoIcons.IoIosPaper />,
         cName: 'sub-nav'
       },
       {
-        title: 'Section',
-        path: '/master/createSection',
+        title: 'Subject',
+        path: '/master/createSubject',
         icon: <IoIcons.IoIosPaper />,
         cName: 'sub-nav'
       },
       {
         title: 'Topic',
         path: '/master/createTopic',
-        icon: <IoIcons.IoIosPaper />
+        icon: <IoIcons.IoIosPaper />,
+        cName: 'sub-nav'
       }
       ,
       {
-        title: 'Create Subject',
-        path: '/master/createSubject',
-        icon: <IoIcons.IoIosPaper />
+        title: 'Papers',
+        path: '/master/paper',
+        icon: <IoIcons.IoIosPaper />,
+        cName: 'sub-nav'
       }
+      
+      
     ]
   },
+  {
+    title: 'Questions',
+    icon: <AiIcons.AiFillHome />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+    subNav: [
+      // {
+      //   title: ' Client',
+      //   path: '/master/createClient',
+      //   icon: <IoIcons.IoIosPaper />,
+      //   cName: 'sub-nav'
+      // },
+      {
+        title: 'Create',
+        path: '/questions/create',
+        icon: <IoIcons.IoIosPaper />,
+        cName: 'sub-nav'
+      },
+      {
+        title: 'View',
+        path: '/questions/view',
+        icon: <IoIcons.IoIosPaper />,
+        cName: 'sub-nav'
+      }
+      
+      
+    ]
+  },
+  {
+    title: 'Candidate',
+    path: '/Candidate',
+    icon: <AiIcons.AiFillHome />,
+  },
+  
+  
   
  
 ];

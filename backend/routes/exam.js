@@ -1,27 +1,27 @@
 const client = require('../db/db.config');
 const bcrypt = require('bcrypt');
 
-async function createExam(req, res) {
+async function createExam(data) {
     
     try {
-      console.log(req.body)
-      // Perform your database insertion with the updated logo file name
-      const query = `INSERT INTO exam(category_name,sub_category_name,exam_name,exam_overview,numberof_exam_stage,exam_mode,exam_duration)
-      VALUES ($1, $2, $3, $4, $5, $6, $7)`;
+     
+     
+      const query = `INSERT INTO exam(category_name,sub_category_name,exam_name,exam_overview,numberof_exam_stage,exam_mode,exam_duration,exam_logo)
+      VALUES ($1, $2, $3, $4, $5, $6, $7,$8)`;
       const values = [
-        req.body.category_name,
-        req.body.sub_category_name,
-        req.body.exam_name,
-        req.body.exam_overview,
-        req.body.numberof_exam_stage,
-        req.body.exam_mode,
-        req.body.exam_duration,
+        data.category_name,
+        data.sub_category_name,
+        data.exam_name,
+        data.exam_overview,
+        data.numberof_exam_stage,
+        data.exam_mode,
+        data.exam_duration,
+        data.logo
       ];
       await client.query(query,values);
-  
       
     } catch (err) {
-      // console.error('Error creating record:', err.message);
+      console.error('Error creating record:', err.message);
      
     }
   }

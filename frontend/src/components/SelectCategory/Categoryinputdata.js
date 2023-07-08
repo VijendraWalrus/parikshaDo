@@ -1,17 +1,20 @@
+
+
 const CategoryInputData = [
   {
     type: "text",
-    name: "Category Name",
+    name: "category_name",
     label: "Category Name",
     id: "Category_Name",
     value: "",
     hasError: false,
     disabled: false,
     isRequired: false,
+
   },
   {
     type: 'file',
-    name: 'Category Logo',
+    name: 'category_logo',
     label: 'Category Logo',
     id: 'Category_Logo',
     value: '',

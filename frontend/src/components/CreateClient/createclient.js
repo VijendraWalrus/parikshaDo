@@ -41,6 +41,9 @@ const useStyles = makeStyles(() => ({
     "& .MuiInputBase-formControl": {
       width: "100%",
     },
+    "& .MuiMenu-paper": {
+      top: '216px',
+  },
   },
   radio:{
     margin:'10px',

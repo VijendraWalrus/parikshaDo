@@ -10,6 +10,9 @@ var category = require('./routes/category')
 var admClient = require('./routes/adminLogin');
 var exams = require('./routes/exam');
 var subject = require('./routes/subject');
+var topic = require('./routes/topic');
+var questions = require('./routes/question');
+var candidate = require('./routes/candidate');
 
 
 const storage = multer.diskStorage({
@@ -20,15 +23,16 @@ const storage = multer.diskStorage({
     cb(null, 'logo-' + uniqueSuffix + extname); 
   }
 });
-
+app.use('/uploads', express.static('uploads'));
 const upload = multer({ storage: storage });
+const uploadexcel = multer({ dest: 'csv/' });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(express.json());
 const corsOptions = {
-  origin: ['http://localhost:3000']
+  origin: ['http://localhost:3000','http://localhost:3001']
 };
 app.use(cors(corsOptions));
 
@@ -36,9 +40,10 @@ app.use(cors(corsOptions));
 // Create a new client
 app.post('/createCategory', upload.single('category_logo'),(req,res) => {
   console.log(req.body)
+  let logo = req.file ? req.file.filename : 'default_logo.png';
   const data = {
     category_name:req.body.category_name,
-    logo:req.file.filename
+    logo:logo
   } 
   console.log("-----"+JSON.stringify(data))
   category.createCategory(data);
@@ -76,10 +81,21 @@ app.post('/createClient',(req,res) => {
   client.createClient(req, res);
 });
 
-app.post('/createExam',(req,res) => {
-  const data = req.body;
+app.post('/createExam', upload.single('exam_logo'),(req,res) => {
+  console.log(req.body)
+  const data = {
+    category_name:req.body.category_name,
+    sub_category_name:req.body.sub_category_name,
+    exam_name:req.body.exam_name,
+    exam_overview:req.body.exam_overview,
+    numberof_exam_stage:req.body.numberof_exam_stage,
+    exam_mode:req.body.exam_mode,
+    exam_duration:req.body.exam_duration,
+    logo:req.file.filename
+  } 
   console.log("-----"+JSON.stringify(req.body))
-  exams.createExam(req, res);
+  exams.createExam(data);
+  res.status(200).json({ message: 'Exam created successfully' });
 });
 app.get('/allExams', async (req, res) => {
   const clients = await exams.allexams();
@@ -92,8 +108,66 @@ app.post('/createSubject',(req,res) => {
   console.log("-----"+JSON.stringify(req.body))
   subject.createSubject(req, res);
 });
+
 app.get('/allSubject', async (req, res) => {
   const clients = await subject.allSubjects();
+  console.log(clients)
+  res.json(clients);
+});
+
+app.get('/allCandidate', async (req, res) => {
+  const clients = await candidate.allCandidates();
+  console.log(clients)
+  res.json(clients);
+});
+
+
+app.post('/createCandidate', upload.single('candidate_image'),(req,res) => {
+  console.log(req.body)
+  const data = {
+    name:req.body.name,
+    mobile_no:req.body.mobile_no,
+    username:req.body.username,
+    password:req.body.password,
+    candidate_image:req.file.filename,
+    gender:req.body.gender,
+    dob:req.body.dob
+  } 
+  console.log("-----"+JSON.stringify(data))
+  candidate.createCandidate(data);
+  res.status(200).json({ message: 'Candidate created successfully' });
+});
+app.post('/createTopic',(req,res) => {
+  const data = req.body;
+  console.log("-----"+JSON.stringify(req.body))
+  topic.createTopic(req, res);
+});
+
+
+
+app.get('/allQuestions', async (req, res) => {
+  const clients = await questions.allQuestions();
+  console.log(clients)
+  res.json(clients);
+});
+
+app.post('/createQuestion',(req,res) => {
+  const data = req.body;
+  console.log("-----"+JSON.stringify(req.body))
+  questions.createQuestion(req, res);
+});
+
+app.post('/createQuestionCsv', upload.single('file'), (req, res) => {
+
+  const file = req.file;
+  questions.parseExcelFile(file.path);
+  res.status(200).json({ message: 'Questions created successfully'});
+});
+
+
+
+app.get('/allTopic', async (req, res) => {
+  const clients = await topic.allTopic();
   console.log(clients)
   res.json(clients);
 });
